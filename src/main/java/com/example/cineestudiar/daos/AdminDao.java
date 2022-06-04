@@ -23,17 +23,9 @@ public class AdminDao {
             while (rs.next()){
                 BUser op = new BUser();
                 op.setCodigoPucp(rs.getString(1));
-                op.setCodigoPucp(rs.getString(2));
-                op.setCodigoPucp(rs.getString(3));
-                op.setCodigoPucp(rs.getString(4));
-                op.setCodigoPucp(rs.getString(5));
-                op.setCodigoPucp(rs.getString(6));
-                op.setCodigoPucp(rs.getString(7));
-                op.setCodigoPucp(rs.getString(8));
-                op.setCodigoPucp(rs.getString(9));
-                op.setCodigoPucp(rs.getString(10));
-                op.setCodigoPucp(String.valueOf(rs.getBlob(11)));
-                op.setCodigoPucp(rs.getString(12));
+                op.setNombres(rs.getString(2));
+                op.setApellidos(rs.getString(3));
+                op.setDni(rs.getString(5));
 
                 listaOperadores.add(op);
             }
@@ -43,5 +35,37 @@ public class AdminDao {
         }
 
         return listaOperadores;
+    }
+    public static ArrayList<BUser> obtenerClientes(){
+        ArrayList<BUser> listaClientes = new ArrayList<>();
+        try {
+            String user = "root";
+            String pass = "root";
+            String url = "jdbc:mysql://localhost:3306/mysystem4";
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String sql = "select codigo_pucp,nombre,apellido,dni,telefono,correo from usuarios \n" +
+                    "where rol=\"cliente\"\n" +
+                    "order by codigo_pucp;";
+            Connection conn = DriverManager.getConnection(url,user,pass);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()){
+                BUser cl = new BUser();
+                cl.setCodigoPucp(rs.getString(1));
+                cl.setNombres(rs.getString(2));
+                cl.setApellidos(rs.getString(3));
+                cl.setDni(rs.getString(5));
+                cl.setTelefono(rs.getString(6));
+                cl.setCorreo(rs.getString(7));
+
+                listaClientes.add(cl);
+            }
+
+        } catch (ClassNotFoundException | SQLException e){
+            e.printStackTrace();
+        }
+
+        return listaClientes;
     }
 }
