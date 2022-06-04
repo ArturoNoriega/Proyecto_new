@@ -1,4 +1,4 @@
-package pe.edu.pucp.cinestudiar_app.beans;
+package com.example.cineestudiar.beans;
 
 import java.sql.Blob;
 
